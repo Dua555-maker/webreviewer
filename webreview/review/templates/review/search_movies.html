@@ -14,15 +14,14 @@
           <div class="col mt-2 d-inline-block float-end" style="max-width: 300px;">
             <form action="{{ url_for('review.search_movie_reviews') }}" method="POST">
               <div class="input-group mb-3">
-                <input name="name" type="text" class="form-control" placeholder="Search by movie's name">
+                <input value="{{name}}" name="name" type="text" class="form-control" placeholder="Search by movie's name">
                 <button class="btn btn-outline-secondary" type="submit">
                   <i class="bi bi-search"></i>
                 </button>
               </div>
             </form>
           </div>
-          <p class="card-text mt-3">Here you can find all the movie reviews that have been posted by our users. Feel
-            free to
+          <p class="card-text mt-3">Here you can find all the movie reviews that have been posted by our users. Feel free to
             browse through the reviews and share your thoughts on your favorite movies!</p>
         </div>
       </div>
@@ -30,11 +29,11 @@
         <div class="card-body">
           <div class="row">
             {% if reviews.items|length == 0 %}
-            <h2 class="text-center">No movie reviews found.</h2>
+              <h2 class="text-center">No movie reviews found.</h2>
             {% else %}
             {% for movie_review in reviews.items %}
             <div class="col-lg-3">
-              <div class="card mt-4" style="height: 100%;">
+              <div class="card mt-4"style="height: 100%;">
                 <a href="{{url_for('review.movie_review_detail', id=movie_review.id)}}">
                   <img src="{{movie_review.img_url}}" alt="" class="card-img-top bg-secondary" style="height: 200px;">
                 </a>
@@ -46,24 +45,23 @@
                     <h6 class="{{color}}">{{movie_review.recommended}} by {{movie_review.user.username}}</h6>
                   </div>
                   {% for type in movie_review.types %}
-                  <a href="{{url_for('review.movie_review_detail', id=movie_review.id)}}"
-                    class="btn btn-outline-secondary btn-sm">
+                  <a href="{{url_for('review.movie_review_detail', id=movie_review.id)}}" class="btn btn-outline-secondary btn-sm mb-1">
                     {{type.name}}
                   </a>
                   {% endfor %}
+
                 </div>
               </div>
             </div>
-          </div>
-          {% endfor %}
+            {% endfor %}
           {% endif %}
+          </div>
+          <br>
+          {% include "review/movie_pagination.html" %}
         </div>
-        <br>
-        {% include "review/movie_pagination.html" %}
       </div>
     </div>
   </div>
-</div>
 </div>
 
 {% endblock %}

@@ -58,8 +58,8 @@ def new_game():
         types=game_types
         )
     
-    existing_game = db.session.scalar(db.select(GameReview).where(GameReview.game_name == game_name))
-    if existing_game:
+    existing_game = db.session.scalar(db.select(GameReview).where(GameReview.game_name == game_name,GameReview.user_id == user_id))
+    if existing_game and existing_game.user_id == user_id:
         flash('You have already reviewed this game!', 'warning')
         return redirect(url_for('review.new_game'))
     else:
@@ -98,7 +98,7 @@ def new_movie():
         types=movie_types
         )
 
-    existing_movie = db.session.scalar(db.select(MovieReview).where(MovieReview.movie_name == movie_name))
+    existing_movie = db.session.scalar(db.select(MovieReview).where(MovieReview.movie_name == movie_name,MovieReview.user_id == user_id))
     if existing_movie:
         flash('You have already reviewed this movie!', 'warning')
         return redirect(url_for('review.new_movie'))
@@ -148,14 +148,14 @@ def update_game(id):
 @login_required
 def delete_game(id):
     game = db.session.get(GameReview, id)
-
+    
     if game.user_id != current_user.id:
         flash('Unauthorized action!', 'danger')
         return redirect(url_for('review.my_reviews'))
 
     db.session.delete(game)
     db.session.commit()
-
+    
     flash('Game review deleted successfully', 'success')
     return redirect(url_for('review.my_reviews'))
 
@@ -236,27 +236,31 @@ def movie_reviews():
     review = db.paginate(query, page=page, per_page=4)
     return render_template('review/movie_reviews.html',title='Movie Reviews', movie_reviews=movie_reviews, reviews=review)
 
-@review_bp.route('/game_reviews/search', methods=['POST'])
+@review_bp.route('/game_reviews/search', methods=['GET','POST'])
 def search_game_reviews():
-    name = request.form.get('name')
+    name = request.args.get('name') or request.form.get('name')
     page = request.args.get('page',type=int)
+    if name is None:
+        return redirect(url_for('review.game_reviews', page=page))
     query = db.select(GameReview).where(GameReview.game_name.ilike(f'%{name}%')
     )
     review = db.paginate(query, page=page, per_page=4)
     searchs_games = db.session.scalars(db.select(GameReview).where(GameReview.game_name.ilike(f'%{name}%'))).all()
 
-    return render_template('review/search_games.html',search_games=searchs_games,title='Search Games', reviews=review)
+    return render_template('review/search_games.html',search_games=searchs_games,title='Search Games', reviews=review,name=name)
 
-@review_bp.route('/movie_reviews/search', methods=['POST'])
+@review_bp.route('/movie_reviews/search', methods=['GET','POST'])
 def search_movie_reviews():
-    name = request.form.get('name')
+    name = request.args.get('name') or request.form.get('name')
     page = request.args.get('page',type=int)
+    if name is None:
+        return redirect(url_for('review.movie_reviews', page=page))
     query = db.select(MovieReview).where(MovieReview.movie_name.ilike(f'%{name}%')
     )
     review = db.paginate(query, page=page, per_page=4)
     searchs_movies = db.session.scalars(db.select(MovieReview).where(MovieReview.movie_name.ilike(f'%{name}%'))).all()
 
-    return render_template('review/search_movies.html',search_movies=searchs_movies,title='Search Movies', reviews=review)
+    return render_template('review/search_movies.html',search_movies=searchs_movies,title='Search Movies', reviews=review,name=name)
 
 @review_bp.route('/game_reviews/<int:id>/detail')
 def game_review_detail(id):

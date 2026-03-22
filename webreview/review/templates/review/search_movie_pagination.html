@@ -1,0 +1,25 @@
+<nav aria-label="Page navigation example" class="mb-3 mt-5">
+  <ul class="pagination justify-content-center">
+    {% if reviews.has_prev %}
+    <li class="page-item"><form method="POST" action="{{url_for('review.search_movie_reviews', page=reviews.prev_num)}}"><input type="hidden" name="name" value="{{name}}"><input type="hidden" name="page" value="{{reviews.prev_num}}"><button class="page-link" type="submit">Previous</button></form></li>
+    {% endif %}
+    
+    {% for number in reviews.iter_pages() %}
+        {% if number %}
+          {% if reviews.page != number %}
+          <li class="page-item"><form method="POST" action="{{url_for('review.search_movie_reviews', page=number)}}"><input type="hidden" name="name" value="{{name}}"><input type="hidden" name="page" value="{{number}}"><button class="page-link" type="submit">{{number}}</button></form></li>
+          {% else %}
+          <li class="page-item"><p class="page-link" href="#">{{number}}</p></li>
+          {% endif %}
+        {% else %}
+          <li class="page-item"><p class="page-link" href="#">...</p></li>
+        {% endif %}
+        
+    {% endfor %}
+
+    {% if reviews.has_next %}
+    <li class="page-item"><form method="POST" action="{{url_for('review.search_movie_reviews', page=reviews.next_num)}}"><input type="hidden" name="name" value="{{name}}"><input type="hidden" name="page" value="{{reviews.next_num}}"><button class="page-link" type="submit">Next</button></form></li>
+    {% endif %}
+    
+  </ul>
+</nav>
