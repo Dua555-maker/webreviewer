@@ -1,0 +1,25 @@
+<nav aria-label="Page navigation example" class="mb-3 mt-5">
+  <ul class="pagination justify-content-center">
+    {% if reviews.has_prev %}
+    <li class="page-item"><a class="page-link" href="{{url_for('review.movie_reviews', page=reviews.prev_num)}}">Previous</a></li>
+    {% endif %}
+    
+    {% for number in reviews.iter_pages() %}
+        {% if number %}
+          {% if reviews.page != number %}
+          <li class="page-item"><a class="page-link" href="{{url_for('review.movie_reviews', page=number)}}">{{number}}</a></li>
+          {% else %}
+          <li class="page-item"><p class="page-link" href="#">{{number}}</p></li>
+          {% endif %}
+        {% else %}
+          <li class="page-item"><p class="page-link" href="#">...</p></li>
+        {% endif %}
+        
+    {% endfor %}
+
+    {% if reviews.has_next %}
+    <li class="page-item"><a class="page-link" href="{{url_for('review.movie_reviews', page=reviews.next_num)}}">Next</a></li>
+    {% endif %}
+    
+  </ul>
+</nav>
