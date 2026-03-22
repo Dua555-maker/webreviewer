@@ -42,7 +42,7 @@
                     <h6 class="{{color}}">{{game_review.recommended}} by {{game_review.user.username}}</h6>
                   </div>
                   {% for type in game_review.types %}
-                  <a href="{{url_for('review.game_review_detail', id=game_review.id)}}" class="btn btn-outline-secondary btn-sm">
+                  <a href="{{url_for('review.game_review_detail', id=game_review.id)}}" class="btn btn-outline-secondary btn-sm mb-1">
                     {{type.name}}
                   </a>
                   {% endfor %}

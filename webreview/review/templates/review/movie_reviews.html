@@ -42,7 +42,7 @@
                     <h6 class="{{color}}">{{movie_review.recommended}} by {{movie_review.user.username}}</h6>
                   </div>
                   {% for type in movie_review.types %}
-                  <a href="{{url_for('review.movie_review_detail', id=movie_review.id)}}" class="btn btn-outline-secondary btn-sm">
+                  <a href="{{url_for('review.movie_review_detail', id=movie_review.id)}}" class="btn btn-outline-secondary btn-sm mb-1">
                     {{type.name}}
                   </a>
                   {% endfor %}
