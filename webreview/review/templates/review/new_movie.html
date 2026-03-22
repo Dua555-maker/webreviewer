@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-md ">
+      <div class="card mb-2">
+        <div class="card-header">
+          <h2>Image Preview</h2>
+        </div>
+      </div>
+      <img id="preview_img"
+        src="https://redthread.uoregon.edu/files/original/affd16fd5264cab9197da4cd1a996f820e601ee4.png"
+        class="img-thumbnail" style="height: 587px; width: 100%;">
+    </div>
+    <div class="col-md mb-2">
+      <div class="container">
+        <div class="card mb-2">
+          <div class="card-header">
+            <h2>New Movie Review</h2>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="mb-2">
+                <label for="movie_name" class="form-label">Movie Name</label>
+                <input name="movie_name" type="text" class="form-control" id="movie_name" required>
+              </div>
+              <label for="topic_name" class="form-label">Topic Name</label>
+              <div class="input-group mb-2">
+                <input name="topic_name" type="text" class="form-control" id="topic_name" required>
+                <select name="recommended" class="form-select"  style="max-width: 200px;" required>
+                  <option selected value="Recommended">Recommended</option>
+                  <option value="Not Recommended">Not Recommended</option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <label for="user_review" class="form-label">User Review</label>
+                <textarea name="user_review" class="form-control" id="user_review" rows="1" required></textarea>
+              </div>
+              <div class="mb-2">
+                <label for="movie_genre" class="form-label">Movie Genre</label>
+                <select name="movie_genres" class="form-select" aria-label="movie_genres" multiple required>
+                  {% for genre in genres %}
+                  <option value="{{genre.id}}">{{genre.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-2">
+                <label for="movie_page" class="form-label">Movie Page</label>
+                <input name="movie_page" type="text" class="form-control" id="movie_page" required>
+              </div>
+              <div class="mb-2">
+                <label for="movie_image" class="form-label">Movie Image URL</label>
+                <div class="input-group mb-2">
+                  <input name="img_url" type="text" class="form-control" id="img_url" required>
+                  <button type="button" class="btn btn-success" id="preview_btn">
+                    <i class="bi bi-card-image"></i>
+                    Preview Image</button>
+                </div>
+              </div>
+              <hr>
+              <button type="submit" class="btn btn-success w-100">
+                <i class="bi bi-ui-checks-grid"></i>
+                Create Movie Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btn = document.getElementById("preview_btn");
+    const input = document.getElementById("img_url");
+    const img = document.getElementById("preview_img");
+
+    btn.addEventListener("click", function () {
+      const url = input.value;
+
+      if (url) {
+        img.src = url;
+      } else {
+        img.src = "https://redthread.uoregon.edu/files/original/affd16fd5264cab9197da4cd1a996f820e601ee4.png";
+      }
+    });
+  </script>
+
+  {% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3 mb-3">
+  <div class="row ">
+    <div class="col-md-6 ">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2 class="d-inline-block">Write Review about games</h2>
+        </div>
+      </div>
+      <div class="col w-50 position-relative" style="z-index: 90; top: 80%; left: 25%;">
+        <a href="{{url_for('review.new_game')}}" class="btn btn-success w-100">
+          <i class="bi bi-controller"></i>
+          New Game Review
+        </a>
+      </div>
+      <div id="carouselGame" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% set seen1 = [] %}
+          {% for game_review in game_reviews %}
+          {% if game_review.game_name not in seen1 %}
+          {% set _ = seen1.append(game_review.game_name) %}
+          <div class="carousel-item {% if loop.first %}active{% endif %}" data-bs-interval="10000">
+            <img src="{{game_review.img_url}}" class="d-block img-thumbnail" alt="..."
+              style="height: 650px; width: 100%;">
+            <div class="carousel-caption d-none d-md-block">
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselGame" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselGame" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-6 text-end">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2 class="d-inline-block">Write Review about movies</h2>
+        </div>
+      </div>
+      <div class="col w-50 position-relative" style="z-index: 90; top: 80%; left: 25%;">
+        <a href="{{url_for('review.new_movie')}}" class="btn btn-success w-100">
+          <i class="bi bi-film"></i>
+          New Movie Review
+        </a>
+      </div>
+      <div id="carouselMovie" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% set seen2 = [] %}
+          {% for movie_review in movie_reviews %}
+          {% if movie_review.movie_name not in seen2 %}
+          {% set _ = seen2.append(movie_review.movie_name) %}
+          <div class="carousel-item {% if loop.first %}active{% endif %}" data-bs-interval="15000">
+            <img src="{{movie_review.img_url}}" class="d-block img-thumbnail" alt="..."
+              style="height: 650px; width: 100%;">
+            <div class="carousel-caption d-none d-md-block">
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselMovie" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselMovie" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  {% endblock %}

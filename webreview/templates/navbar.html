@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar sticky-top bg-body-tertiary border border-bottom-100">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{url_for('core.index')}}"><span style="color: orange;">Flaming</span> Review</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{{url_for('core.index')}}">Home Page</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('review.index')}}">Write Review</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Review Categories
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{url_for('review.game_reviews')}}">Game Reviews</a></li>
+            <li><a class="dropdown-item" href="{{url_for('review.movie_reviews')}}">Movie Reviews</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('review.my_reviews')}}">My Review</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        {% if current_user.is_authenticated %}
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="{{url_for('static', filename='img/' + current_user.avatar)}}" alt="" width="25" height="25">
+                Welcome, {{current_user.username}}
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ url_for('users.profile', id=current_user.id) }}">
+                  <i class="bi bi-person-square"></i>
+                  Profile</a></li>
+                <li><a class="dropdown-item" href="{{url_for('users.change_password', id=current_user.id)}}">
+                  <i class="bi bi-input-cursor-text"></i>
+                  Change Password</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{url_for('users.logout')}}">
+                  <i class="bi bi-box-arrow-left"></i>
+                  Logout</a></li>
+              </ul>
+            </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('users.register')}}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('users.login')}}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

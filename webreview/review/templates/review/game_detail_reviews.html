@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-md ">
+      <div class="card mb-2">
+        <div class="card-header">
+          <h2>Image Preview</h2>
+        </div>
+      </div>
+      <img id="preview_img" src="{{game.img_url}}" class="img-thumbnail" style="height: 587px; width: 100%;">
+    </div>
+    <div class="col-md mb-2">
+      <div class="container">
+        <div class="card mb-2">
+          <div class="card-header">
+            <h2>{{game.topic}}</h2>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <h3 class="text-black">Game Name : {{game.game_name}}</h3>
+              {% set color = 'text-success' if game.recommended == 'Recommended' else 'text-danger' %}
+              <h3 class=" {{color}}">Recommendation : {{game.recommended}}</h3>
+              <h3>User : {{game.user.username}}</h3>
+              <h3>User Review : </h3>
+              <p>{{game.review}}</p>
+              <h3>Genres : {% for type in game.types %}
+                <div href="#" class="btn btn-outline-secondary btn-sm">
+                  {{type.name}}
+                </div>
+                {% endfor %}
+              </h3>
+            </div>
+            <h3 class="mb-4">Review Date: {{ game.created_at.strftime("%d %b %Y, %H:%M UTC+0") }}</h3>
+            <a href="{{game.store_page}}" class="btn btn-primary w-100">
+              <i class="bi bi-shop"></i>
+              Visit Store Page
+            </a>
+            <hr class="">
+            <a href="{{url_for('review.game_reviews')}}" class="btn btn-success w-100">
+              <i class="bi bi-skip-backward-fill"></i>
+              Back to Game Reviews
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

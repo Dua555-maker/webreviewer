@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-2">
+        <div class="card-header" style="height: 667px;">
+          <h1 class="card-text mt-1 mb-3">
+            Welcome to <span style="color: orange;">Flaming</span> Review
+          </h1>
+          <h5 class="card-text mt-1 mb-1">
+            the ultimate destination
+            for game and movie enthusiasts! Dive into a world of insightful reviews,
+          </h5>
+          <p class="text-secondary" style="font-size: 19px;">the ultimate destination for game and movie enthusiasts!
+          </p>
+          <p class="text-secondary" style="font-size: 19px;">Whether you're looking for recommendations, sharing your
+            own experiences,
+            or simply exploring the latest trends,</p>
+          <p class="text-secondary" style="font-size: 19px;">Flaming Review is your go-to platform for all things
+            entertainment.</p>
+          <p class="text-secondary" style="font-size: 19px;">
+            <b>Join us today and be part of the conversation!</b>
+          </p>
+          <p class="text-secondary" style="font-size: 19px ;margin-top: 250px;">
+            <b>Try your luck!</b>
+          </p>
+          <button onclick="window.location.reload()" type="submit" class="btn btn-success w-100">
+            <i class="bi bi-shuffle"></i>
+            Random Review</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-2">
+        <div class="card-header">
+          <div id="carouselSlide" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              {% for review in reviews %}
+              <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <a href="{% if review.movie_name %}{{url_for('review.movie_review_detail', id=review.id)}}{% else %}{{url_for('review.game_review_detail', id=review.id)}}{% endif %}">
+                <img src="{{review.img_url}}" class="d-block w-100" style="height: 650px;">
+                </a>
+                <div class="carousel-caption d-none d-md-block text-light bg-dark bg-opacity-75 rounded">
+                  <h5>{{review.game_name}}{{review.movie_name}}</h5>
+                  <p>{{review.topic}}</p>
+                  <small>by {{review.user.username}}</small>
+                </div>
+
+              </div>
+              {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselSlide"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselSlide"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

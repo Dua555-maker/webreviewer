@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12 mb-2">
+      <div class="card mb-2">
+        <div class="card-header">
+          <h2 class="d-inline-block">Game Reviews</h2>
+          <div class="col mt-2 d-inline-block float-end" style="max-width: 300px;">
+            <form action="{{ url_for('review.search_game_reviews') }}" method="POST">
+              <div class="input-group mb-3">
+                <input name="name" type="text" class="form-control" placeholder="Search by name">
+                <button class="btn btn-outline-secondary" type="submit">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <p class="card-text mt-3">Here you can find all the game reviews that have been posted by our users. Feel free to
+            browse through the reviews and share your thoughts on your favorite games!</p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <div class="row">
+            {% if reviews.items|length == 0 %}
+              <h2 class="text-center">No game reviews found.</h2>
+            {% else %}
+            {% for game_review in reviews.items %}
+            <div class="col-lg-3">
+              <div class="card mt-4"style="height: 100%;">
+                <a href="{{url_for('review.game_review_detail', id=game_review.id)}}">
+                  <img src="{{game_review.img_url}}" alt="" class="card-img-top bg-secondary" style="height: 200px;">
+                </a>
+                <div class="card-body">
+                  <h5 class="text-dark text-center">{{game_review.topic}}</h5>
+                  <div class="text-center">
+                    <h6 class="text-primary">{{game_review.game_name}}</h6>
+                    {% set color = 'text-success' if game_review.recommended == 'Recommended' else 'text-danger' %}
+                    <h6 class="{{color}}">{{game_review.recommended}} by {{game_review.user.username}}</h6>
+                  </div>
+                  {% for type in game_review.types %}
+                  <a href="{{url_for('review.game_review_detail', id=game_review.id)}}" class="btn btn-outline-secondary btn-sm">
+                    {{type.name}}
+                  </a>
+                  {% endfor %}
+
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          {% endif %}
+          </div>
+          <br>
+          {% include "review/pagination.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

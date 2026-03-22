@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+
+<div class="container text-center">
+  <div class="row" style="margin-top: 120px;">
+    <div class="col">
+    </div>
+    <div class="col">
+    </div>
+    <div class="col-4">
+      <div class="container mt-3">
+        <div class="card mt-3 mb-3">
+          <div class="card-header">
+            <h2>Change Password</h2>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="mb-3 text-start">
+                <label class="form-label">Old password</label>
+                <div class="input-group">
+                  <input name="password" type="password" class="form-control" id="password" required>
+                  <button type="button" class="btn btn-outline-secondary" onclick="togglePassword1('password')">
+                   <i id="password-icon1" class="bi bi-eye-slash-fill"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="mb-3 text-start">
+                <label for="new_password" class="form-label">New password</label>
+                <div class="input-group">
+                  <input name="new_password" type="password" class="form-control" id="new_password" required>
+                  <button type="button" class="btn btn-outline-secondary" onclick="togglePassword2('new_password')">
+                   <i id="password-icon2" class="bi bi-eye-slash-fill"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="mb-3 text-start">
+                <label for="confirm_password" class="form-label">Confirm password</label>
+                <div class="input-group">
+                  <input name="confirm_password" type="password" class="form-control" id="confirm_password" required>
+                  <button type="button" class="btn btn-outline-secondary" onclick="togglePassword3('confirm_password')">
+                   <i id="password-icon3" class="bi bi-eye-slash-fill"></i>
+                  </button>
+                </div>
+              </div>
+              <hr>
+              <button type="submit" class="btn btn-success w-100">
+                <i class="bi bi-ui-checks-grid"></i>
+                Change Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePassword1(fieldId) {
+  const password1= document.getElementById("password-icon1");
+  const input = document.getElementById(fieldId);
+
+  if (input.type === "password") {
+    input.type = "text";
+    password1.classList.remove('bi-eye-slash-fill');
+    password1.classList.add('bi-eye-fill');
+  } else {
+    input.type = "password";
+    password1.classList.remove('bi-eye-fill');
+    password1.classList.add('bi-eye-slash-fill');
+  }
+}
+
+function togglePassword2(fieldId) {
+  const password2= document.getElementById("password-icon2");
+  const input = document.getElementById(fieldId);
+
+  if (input.type === "password") {
+    input.type = "text";
+    password2.classList.remove('bi-eye-slash-fill');
+    password2.classList.add('bi-eye-fill');
+  } else {
+    input.type = "password";
+    password2.classList.remove('bi-eye-fill');
+    password2.classList.add('bi-eye-slash-fill');
+  }
+}
+
+function togglePassword3(fieldId) {
+  const password3= document.getElementById("password-icon3");
+  const input = document.getElementById(fieldId);
+
+  if (input.type === "password") {
+    input.type = "text";
+    password3.classList.remove('bi-eye-slash-fill');
+    password3.classList.add('bi-eye-fill');
+  } else {
+    input.type = "password";
+    password3.classList.remove('bi-eye-fill');
+    password3.classList.add('bi-eye-slash-fill');
+
+  }
+}
+</script>
+
+{% endblock %}

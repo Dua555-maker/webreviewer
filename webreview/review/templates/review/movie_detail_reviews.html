@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-md ">
+      <div class="card mb-2">
+        <div class="card-header">
+          <h2>Image Preview</h2>
+        </div>
+      </div>
+      <img id="preview_img" src="{{movie.img_url}}" class="img-thumbnail" style="height: 587px; width: 100%;">
+    </div>
+    <div class="col-md mb-2">
+      <div class="container">
+        <div class="card mb-2">
+          <div class="card-header">
+            <h2>{{movie.topic}}</h2>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <h3 class="text-black">Movie Name : {{movie.movie_name}}</h3>
+              {% set color = 'text-success' if movie.recommended == 'Recommended' else 'text-danger' %}
+              <h3 class=" {{color}}">Recommendation : {{movie.recommended}}</h3>
+              <h3>User : {{movie.user.username}}</h3>
+              <h3>User Review : </h3>
+              <p>{{movie.review}}</p>
+              <h3>Genres : {% for type in movie.types %}
+                <div href="#" class="btn btn-outline-secondary btn-sm">
+                  {{type.name}}
+                </div>
+                {% endfor %}
+              </h3>
+            </div>
+            <h3 class="mb-4">Review Date: {{ movie.created_at.strftime("%d %b %Y, %H:%M UTC+0") }}</h3>
+            <a href="{{movie.movie_page}}" class="btn btn-primary w-100">
+              <i class="bi bi-film"></i>
+              Visit Movie Page
+            </a>
+            <hr class="">
+            <a href="{{url_for('review.movie_reviews')}}" class="btn btn-success w-100">
+              <i class="bi bi-skip-backward-fill"></i>
+              Back to Movie Reviews
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
